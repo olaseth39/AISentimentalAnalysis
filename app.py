@@ -23,9 +23,9 @@ def search(query: str):
     results.extend(google_search(query, site="facebook.com"))
 
     # Instagram via Google
-    results.extend(google_search(query, site="instagram.com"))
+    results.extend(google_search(query, site="instagram.com/p"))
     
     # Instagram via Google
-    results.extend(google_search(query, site="medium.com"))
+    #results.extend(google_search(query, site="medium.com"))
 
     return {"query": query, "results": results}

@@ -1,10 +1,10 @@
-def normalize_post(platform, post_id, text, author, url, comments=None, reactions=None):
+def normalize_post(platform, text, url, comments=None, reactions=None):
     return {
         "platform": platform,
-        "id": post_id,
+        #"id": post_id,
         "text": text,
-        "author": author,
+        #"author": author,
         "url": url,
         "comments": comments or [],
-        "reactions": reactions or {}
+        #"reactions": reactions or {}
     }
