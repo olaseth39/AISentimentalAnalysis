@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait 
 from selenium.webdriver.support import expected_conditions as EC
 from apify_client import ApifyClient
+import json
 
 load_dotenv()
 
@@ -74,7 +75,7 @@ def scrape_comment(site, url):
             "isNewestComments": True,
             "includeNestedComments": True,
         }
-        print(url)
+        #print(url)
         # Run the Actor and wait for it to finish
         run = client.actor("SbK00X0JYCPblD2wp").call(run_input=run_input)
 
@@ -82,7 +83,7 @@ def scrape_comment(site, url):
         dataset_id = run["defaultDatasetId"]
         items = client.dataset(dataset_id).list_items().items
         for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-            comments.append(items["comment"])
+            comments.append(item["text"])
         
         # for reddit
         if site == "reddit.com":
@@ -146,6 +147,11 @@ def google_search(query, site=None):
                     comments=comments,
                 )
             )
+            
+            # save a copy of the results to a json file
+            with open("all_comments.json", "w", encoding="utf-8") as f:
+                json.dump(results, f, indent=2, ensure_ascii=False)
+                
         return results
     return []
 
